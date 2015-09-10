@@ -1,0 +1,86 @@
+#!perl
+
+# DATE
+# VERSION
+
+use 5.010001;
+use strict;
+use warnings;
+
+use Getopt::Long::EvenLess;
+
+sub _help {
+        print <<'_';
+Usage:
+  errno <num>
+  errno <search string>
+  errno --list (-l)
+  errno --help (-h, -?)
+  errno --version (-v)
+_
+}
+
+my @errnos;
+{
+    my $i = 0;
+    local $!;
+    while (1) {
+        $i++;
+        $! = $i;
+        my $str = "$!";
+        last if $str =~ /unknown error/i;
+        push @errnos, [$i, $str];
+        last if $i >= 255; # hard limit, should anything goes wrong
+    }
+}
+
+GetOptions(
+    'help|h|?' => sub {
+        _help();
+        exit 0;
+    },
+    'version|v' => sub {
+        no warnings 'once';
+        say "errno version $main::VERSION";
+        exit 0;
+    },
+    'list|l' => sub {
+        for (@errnos) { say "$_->[0]\t$_->[1]" }
+        exit 0;
+    },
+);
+
+if (@ARGV != 1) {
+    _help();
+    exit 1;
+}
+
+if ($ARGV[0] =~ /\A\d+\z/) {
+    local $! = +$ARGV[0];
+    my $str = "$!";
+    say $str;
+    exit $str =~ /unknown error/i ? 1:0;
+} else {
+    my $search = lc($ARGV[0]);
+    for (@errnos) {
+        if (index(lc($_->[1]), $search) >= 0) {
+            say $_->[1];
+            exit 0;
+        }
+    }
+    exit 1;
+}
+
+# ABSTRACT: List/show errno
+
+=head1 SYNOPSIS
+
+List all known errno's on your system:
+
+ % errno -l
+
+
+=head1 DESCRIPTION
+
+This script can be used to show the error message of a particular C<errno>, or
+list all available errno's on your system.
