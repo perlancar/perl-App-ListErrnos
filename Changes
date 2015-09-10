@@ -1,5 +1,11 @@
 Revision history for App-errno
 
+0.04    2015-09-10 (PERLANCAR)
+
+	- [Bugfix] Show all string matches, don't exit after the first
+	  match.
+
+
 0.03    2015-09-10 (PERLANCAR)
 
         - Rename dist/script from App-errnos to App-errno.
