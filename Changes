@@ -4,8 +4,8 @@ Revision history for App-errno
 
 	- No functional changes.
 
-	- Use Errno instead of naively iterating from 1..N (the codes list
-	  is not a single contiguous block).
+	- [Bugfix] Use Errno instead of naively iterating from 1..N (the codes
+	  list is not a single contiguous block).
 
 
 0.04    2015-09-10 (PERLANCAR)
