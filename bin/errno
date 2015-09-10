@@ -20,18 +20,16 @@ Usage:
 _
 }
 
-my @errnos;
+my @errnos; # [name, numeric code, message]
 {
-    my $i = 0;
-    local $!;
-    while (1) {
-        $i++;
-        $! = $i;
-        my $str = "$!";
-        last if $str =~ /unknown error/i;
-        push @errnos, [$i, $str];
-        last if $i >= 255; # hard limit, should anything goes wrong
+    require Errno;
+    no strict 'refs';
+    for (sort @Errno::EXPORT_OK) {
+        my $num = &{"Errno::$_"};
+        local $! = $num;
+        push @errnos, [$_, $num, "$!"];
     }
+    @errnos = sort { $a->[1] <=> $b->[1] } @errnos;
 }
 
 GetOptions(
@@ -45,7 +43,7 @@ GetOptions(
         exit 0;
     },
     'list|l' => sub {
-        for (@errnos) { say "$_->[0]\t$_->[1]" }
+        for (@errnos) { say "$_->[0]\t$_->[1]\t$_->[2]" }
         exit 0;
     },
 );
@@ -64,8 +62,9 @@ if ($ARGV[0] =~ /\A\d+\z/) {
     my $search = lc($ARGV[0]);
     my $found;
     for (@errnos) {
-        if (index(lc($_->[1]), $search) >= 0) {
-            say "$_->[0]\t$_->[1]";
+        if (index(lc($_->[0]), $search) >= 0 ||
+                index(lc($_->[2]), $search) >= 0) {
+            say "$_->[0]\t$_->[1]\t$_->[2]";
             $found++;
         }
     }
@@ -84,6 +83,7 @@ Show the error message string for a certain errno code:
 Search error message string:
 
  % errno file
+ % errno ENOT
 
 List all known errno's on your system:
 
