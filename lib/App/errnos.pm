@@ -54,7 +54,19 @@ _
 die "Can't generate list_errnos function: $res->[0] - $res->[1]"
     unless $res->[0] == 200;
 
-$SPEC{list_osnames}{args}{query}{pos} = 0;
+$SPEC{list_errnos}{args}{query}{pos} = 0;
+$SPEC{list_errnos}{args}{detail}{cmdline_aliases} = {l=>{}};
+$SPEC{list_errnos}{args}{query}{pos} = 0;
+$SPEC{list_errnos}{examples} = [
+    {
+        summary => 'List possible errno numbers with their messages',
+        argv => ["-l"],
+    },
+    {
+        summary => 'Search specific errnos',
+        argv => ["-l", "No such"],
+    },
+];
 
 1;
 # ABSTRACT:
