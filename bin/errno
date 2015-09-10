@@ -72,8 +72,17 @@ if ($ARGV[0] =~ /\A\d+\z/) {
 }
 
 # ABSTRACT: List/show errno
+# PODNAME: errno
 
 =head1 SYNOPSIS
+
+Show the error message string for a certain errno code:
+
+ % errno 23
+
+Search error message string:
+
+ % errno file
 
 List all known errno's on your system:
 

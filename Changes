@@ -1,4 +1,18 @@
-Revision history for App-errnos
+Revision history for App-errno
+
+0.03    2015-09-10 (PERLANCAR)
+
+        - Rename dist/script from App-errnos to App-errno.
+
+        - Reduce deps by not using Perinci::CmdLine or
+          Perinci::Sub::Gen::AccessTable, the dist now only depends on
+          Getopt::Long::EvenLess.
+
+        - Allow searching/showing a single errno (e.g. 'errno 23'). Searching
+          errno string messages still work (e.g. 'errno file').
+
+        - Listing errnos becomes 'errno --list' (or -l).
+
 
 0.02    2015-09-10 (PERLANCAR)
 
