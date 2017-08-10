@@ -3,9 +3,10 @@
 # DATE
 # VERSION
 
-use 5.010001;
+# IFUNBUILT
 use strict;
 use warnings;
+# END IFUNBUILT
 
 use Getopt::Long::EvenLess;
 
@@ -39,11 +40,11 @@ GetOptions(
     },
     'version|v' => sub {
         no warnings 'once';
-        say "errno version $main::VERSION";
+        print "errno version $main::VERSION\n";
         exit 0;
     },
     'list|l' => sub {
-        for (@errnos) { say "$_->[0]\t$_->[1]\t$_->[2]" }
+        for (@errnos) { print "$_->[0]\t$_->[1]\t$_->[2]\n" }
         exit 0;
     },
 );
@@ -56,7 +57,7 @@ if (@ARGV != 1) {
 if ($ARGV[0] =~ /\A\d+\z/) {
     local $! = +$ARGV[0];
     my $str = "$!";
-    say $str;
+    print $str, "\n";
     exit $str =~ /unknown error/i ? 1:0;
 } else {
     my $search = lc($ARGV[0]);
@@ -64,7 +65,7 @@ if ($ARGV[0] =~ /\A\d+\z/) {
     for (@errnos) {
         if (index(lc($_->[0]), $search) >= 0 ||
                 index(lc($_->[2]), $search) >= 0) {
-            say "$_->[0]\t$_->[1]\t$_->[2]";
+            print "$_->[0]\t$_->[1]\t$_->[2]\n";
             $found++;
         }
     }
