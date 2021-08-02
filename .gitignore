@@ -2,3 +2,4 @@ App-errno-*
 .build
 *~
 nytprof*
+.DS_Store
