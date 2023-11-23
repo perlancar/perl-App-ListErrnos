@@ -69,7 +69,7 @@ if ($ARGV[0] =~ /\A\d+\z/) {
             $found++;
         }
     }
-    exit $found ? 0 : 1;
+    exit($found ? 0 : 1);
 }
 
 # ABSTRACT: List/show errno
