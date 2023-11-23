@@ -1,12 +1,16 @@
 #!perl
 
-# DATE
-# VERSION
+## no critic: TestingAndDebugging::RequireUseStrict
 
 # IFUNBUILT
 use strict;
 use warnings;
 # END IFUNBUILT
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 use Getopt::Long::EvenLess;
 

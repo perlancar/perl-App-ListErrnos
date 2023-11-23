@@ -1,6 +1,10 @@
 package App::errno;
 
+use strict;
+
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 1;
