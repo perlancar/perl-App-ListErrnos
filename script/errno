@@ -98,4 +98,5 @@ List all known errno's on your system:
 =head1 DESCRIPTION
 
 This script can be used to show the error message of a particular C<errno>, or
-list all available errno's on your system.
+list all available errno's on your system. It is basically a simple CLI for the
+L<Errno>.pm Perl module.
